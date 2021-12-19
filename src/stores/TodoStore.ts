@@ -28,15 +28,17 @@ export const todoStore = defineStore('todos', {
             } catch (err) {
                 // Do something with the error?
             }
-            this.popLoading('loadTodos');
         },
         updateTodos(todos: Todo[]) {
+            this.popLoading('loadTodos');
             this.todos = todos;
         },
         pushLoading(callSite: string) {
+            console.log(`Pushing ${callSite}`);
             this.loading.push(callSite);
         },
         popLoading(callSite: string) {
+            console.log(`Popping ${callSite}`);
             const indexOf = this.loading.indexOf(callSite);
             this.loading.splice(indexOf, 1);
         }

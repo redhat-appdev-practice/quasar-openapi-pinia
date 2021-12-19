@@ -1,54 +1,32 @@
 <template>
-  <q-page class="flex">
-    <q-table
-      title="Todos"
-      class="col-grow"
-      :rows="todos.todoList"
-      :columns="columns"
-      row-key="id"
-      dense
-    />
-  </q-page>
+  <div class="flex q-pa-md">
+    <div class="full-width row inline no-wrap justify-start items-start content-start">
+      <div class="col-4 header">Title</div>
+      <div class="col-4 header">Description</div>
+    </div>
+    <div v-for="todo in todoList" :key="todo.id" class="full-width row inline no-wrap justify-start items-start content-start">
+      <div class="col-4">{{ todo.title }}</div>
+      <div class="col-4">{{ todo.description }}</div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { Todo } from "@/sdk";
 import { todoStore } from "@/stores/TodoStore"
+import { computed, defineComponent } from "vue";
 
-export default {
-  name: 'Home',
+export default defineComponent(() => {
+  const todos = todoStore();
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  setup: () => {
-    const todos = todoStore();
+  todos.loadTodos();
 
-    todos.loadTodos();
-    
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    function defineColumn(name: string, label: string, field: Function, style = '', width = 4, align = 'left', sortable = false): any {
-      return {
-        name,
-        label,
-        field,
-        headerStyle: `font-weight: bold; text-transform: uppercase; width: ${width}rem;`,
-        align,
-        sortable,
-        style,
-      }
-    }
-
-    // Define the column metadata
-    const columns = [
-      defineColumn('id', 'ID', (row: Todo) => row.id),
-      defineColumn('title', 'Title', (row: Todo) => row.title, '', 6),
-      defineColumn('description', 'Description', (row: Todo) => row.description, '', 8)
-    ];
-
-    // Make these fields available to the template
-    return {
-      columns,
-      todos
-    };
+  return {
+    todoList: computed(() => todos.todoList)
   }
-}
+})
 </script>
+<style lang="sass">
+.header
+  font-size: 1.2rem
+  font-weight: 800
+</style>
