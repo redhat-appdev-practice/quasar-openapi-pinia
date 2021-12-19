@@ -2,14 +2,14 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
+        <!-- <q-btn
           flat
           dense
           round
           @click="leftDrawerOpen = !leftDrawerOpen"
           aria-label="Menu"
           icon="menu"
-        />
+        /> -->
 
         <q-toolbar-title>
           Todo List
@@ -17,7 +17,7 @@
 
       </q-toolbar>
     </q-header>
-
+<!-- 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
@@ -27,7 +27,7 @@
       <q-list>
         
       </q-list>
-    </q-drawer>
+    </q-drawer> -->
 
     <q-page-container>
       <router-view />

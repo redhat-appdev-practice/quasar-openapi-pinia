@@ -34,11 +34,9 @@ export const todoStore = defineStore('todos', {
             this.todos = todos;
         },
         pushLoading(callSite: string) {
-            console.log(`Pushing ${callSite}`);
             this.loading.push(callSite);
         },
         popLoading(callSite: string) {
-            console.log(`Popping ${callSite}`);
             const indexOf = this.loading.indexOf(callSite);
             this.loading.splice(indexOf, 1);
         }
