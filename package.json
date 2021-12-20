@@ -9,7 +9,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "prism": "prism mock -d --cors -p 7080 openapi.yml",
-    "openapi": "rm -f src/sdk; mkdir src/sdk; openapi-generator-cli generate -g typescript-axios -i openapi.yml -o src/sdk/ -p withSeparateModelsAndApi=true,apiPackage=api,modelPackage=models",
+    "openapi": "rm -rf src/sdk; mkdir src/sdk; openapi-generator-cli generate -g typescript-axios -i openapi.yml -o src/sdk/ -p withSeparateModelsAndApi=true,apiPackage=api,modelPackage=models",
     "watch": "npm-watch"
   },
   "watch": {
@@ -43,6 +43,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
+    "dayjs": "^1.10.7",
     "fetch": "^1.1.0",
     "pinia": "^2.0.6",
     "quasar": "^2.0.0",

@@ -1,5 +1,10 @@
 ---
 openapi: 3.0.2
+x-json-schema-faker: 
+  locale: en
+  min-items: 2
+  max-items: 100
+  resolve-json-path: false
 info:
   title: Todo
   version: 1.0.0
@@ -70,12 +75,23 @@ components:
       properties:
         title:
           type: string
+          x-faker: internet.username
           maxLength: 255
         description:
           type: string
         id:
           type: string
           format: uuid
+        due_date:
+          type: string
+          x-faker: date.future
+          format: date-time
+          nullable: true
+        completed:
+          type: string
+          x-faker: date.recent
+          format: date-time
+          nullable: true
     Todo:
       type: object
       required:

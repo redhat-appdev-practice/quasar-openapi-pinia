@@ -2,13 +2,11 @@ import { Todo } from '@/sdk';
 import { defineStore } from 'pinia';
 
 export interface TodoState {
-    todos: Todo[]
-    loading: string[]
+    todos: Todo[],
 }
 
 export const initState = (): TodoState => ({
     todos: [],
-    loading: [],
 });
 
 export const todoStore = defineStore('todos', {
@@ -16,29 +14,29 @@ export const todoStore = defineStore('todos', {
 
     getters: {
         todoList: (state) => state?.todos,
-        isLoading: (state) => (state.loading.length > 0),
     },
 
     actions: {
-        async loadTodos() {
-            this.pushLoading('loadTodos');
-            try {
-                const { data } = await this.todoApi.getAllTodos();
-                this.updateTodos(data);
-            } catch (err) {
-                // Do something with the error?
+        async loadTodos(notify: (message: string, type: string) => void, increment: (increment?: number) => void, stop: () => void) {
+            increment(10);
+            const axiosConfig = {
+                onUploadProgress: (progressEvent: ProgressEvent) => {
+                    increment(progressEvent.loaded * 80);
+                }
             }
+            increment(20);
+            try {
+                const { data } = await this.todoApi.getAllTodos(axiosConfig);
+                this.updateTodos(data);
+                stop();
+            } catch (err) {
+                notify('An error occurred loading Todo items from the API', 'negative');
+            }
+            increment(100);
         },
+
         updateTodos(todos: Todo[]) {
-            this.popLoading('loadTodos');
             this.todos = todos;
-        },
-        pushLoading(callSite: string) {
-            this.loading.push(callSite);
-        },
-        popLoading(callSite: string) {
-            const indexOf = this.loading.indexOf(callSite);
-            this.loading.splice(indexOf, 1);
         }
     }
 });

@@ -1,5 +1,6 @@
 
 import { Configuration, TodoApi } from "@/sdk";
+import axios, { AxiosInstance } from "axios";
 import { PiniaPluginContext } from "pinia";
 
 declare module 'pinia' {
@@ -10,6 +11,7 @@ declare module 'pinia' {
         getters?: G
         actions?: A
         todoApi: TodoApi
+        axios: AxiosInstance
     }
 
     export interface DefineStoreOptionsInPlugin<Id extends string, S extends StateTree, G, A> extends Omit<DefineStoreOptions<Id, S, G, A>, 'id' | 'actions'> {
@@ -18,6 +20,7 @@ declare module 'pinia' {
 }
 
 export const APIPlugin = ({options, store}: PiniaPluginContext): void => {
+    store.axios = axios
     const { apiConfig } = options;
 
     if (apiConfig) {
